@@ -2,11 +2,13 @@ package com.halo.blog;
 
 import androidx.hilt.work.HiltWrapper_WorkerFactoryModule;
 import com.halo.blog.data.api.NetworkModule;
+import com.halo.blog.di.UpdateModule;
 import com.halo.blog.ui.viewmodel.CategoryTagViewModel_HiltModules;
 import com.halo.blog.ui.viewmodel.CommentViewModel_HiltModules;
 import com.halo.blog.ui.viewmodel.PostViewModel_HiltModules;
 import com.halo.blog.ui.viewmodel.SearchViewModel_HiltModules;
 import com.halo.blog.ui.viewmodel.TagViewModel_HiltModules;
+import com.halo.blog.utils.UpdateManager_HiltModules;
 import com.halo.blog.worker.AutoUpdateWorker_HiltModule;
 import dagger.Binds;
 import dagger.Component;
@@ -137,7 +139,8 @@ public final class HaloBlogApplication_HiltComponents {
           ServiceCBuilderModule.class,
           HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule.class,
           HiltWrapper_WorkerFactoryModule.class,
-          NetworkModule.class
+          NetworkModule.class,
+          UpdateModule.class
       }
   )
   @Singleton
@@ -167,7 +170,8 @@ public final class HaloBlogApplication_HiltComponents {
           HiltWrapper_ActivityRetainedComponentManager_LifecycleModule.class,
           PostViewModel_HiltModules.KeyModule.class,
           SearchViewModel_HiltModules.KeyModule.class,
-          TagViewModel_HiltModules.KeyModule.class
+          TagViewModel_HiltModules.KeyModule.class,
+          UpdateManager_HiltModules.KeyModule.class
       }
   )
   @ActivityRetainedScoped
@@ -208,7 +212,8 @@ public final class HaloBlogApplication_HiltComponents {
           HiltWrapper_HiltViewModelFactory_ViewModelModule.class,
           PostViewModel_HiltModules.BindsModule.class,
           SearchViewModel_HiltModules.BindsModule.class,
-          TagViewModel_HiltModules.BindsModule.class
+          TagViewModel_HiltModules.BindsModule.class,
+          UpdateManager_HiltModules.BindsModule.class
       }
   )
   @ViewModelScoped

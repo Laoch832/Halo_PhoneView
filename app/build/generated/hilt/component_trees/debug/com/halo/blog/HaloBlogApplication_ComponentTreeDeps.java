@@ -21,6 +21,7 @@ import hilt_aggregated_deps._androidx_hilt_work_HiltWrapper_WorkerFactoryModule;
 import hilt_aggregated_deps._com_halo_blog_HaloBlogApplication_GeneratedInjector;
 import hilt_aggregated_deps._com_halo_blog_MainActivity_GeneratedInjector;
 import hilt_aggregated_deps._com_halo_blog_data_api_NetworkModule;
+import hilt_aggregated_deps._com_halo_blog_di_UpdateModule;
 import hilt_aggregated_deps._com_halo_blog_ui_viewmodel_CategoryTagViewModel_HiltModules_BindsModule;
 import hilt_aggregated_deps._com_halo_blog_ui_viewmodel_CategoryTagViewModel_HiltModules_KeyModule;
 import hilt_aggregated_deps._com_halo_blog_ui_viewmodel_CommentViewModel_HiltModules_BindsModule;
@@ -31,6 +32,8 @@ import hilt_aggregated_deps._com_halo_blog_ui_viewmodel_SearchViewModel_HiltModu
 import hilt_aggregated_deps._com_halo_blog_ui_viewmodel_SearchViewModel_HiltModules_KeyModule;
 import hilt_aggregated_deps._com_halo_blog_ui_viewmodel_TagViewModel_HiltModules_BindsModule;
 import hilt_aggregated_deps._com_halo_blog_ui_viewmodel_TagViewModel_HiltModules_KeyModule;
+import hilt_aggregated_deps._com_halo_blog_utils_UpdateManager_HiltModules_BindsModule;
+import hilt_aggregated_deps._com_halo_blog_utils_UpdateManager_HiltModules_KeyModule;
 import hilt_aggregated_deps._com_halo_blog_worker_AutoUpdateWorker_HiltModule;
 import hilt_aggregated_deps._dagger_hilt_android_flags_FragmentGetContextFix_FragmentGetContextFixEntryPoint;
 import hilt_aggregated_deps._dagger_hilt_android_flags_HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule;
@@ -75,6 +78,7 @@ import hilt_aggregated_deps._dagger_hilt_android_internal_modules_HiltWrapper_Ac
         _com_halo_blog_HaloBlogApplication_GeneratedInjector.class,
         _com_halo_blog_MainActivity_GeneratedInjector.class,
         _com_halo_blog_data_api_NetworkModule.class,
+        _com_halo_blog_di_UpdateModule.class,
         _com_halo_blog_ui_viewmodel_CategoryTagViewModel_HiltModules_BindsModule.class,
         _com_halo_blog_ui_viewmodel_CategoryTagViewModel_HiltModules_KeyModule.class,
         _com_halo_blog_ui_viewmodel_CommentViewModel_HiltModules_BindsModule.class,
@@ -85,6 +89,8 @@ import hilt_aggregated_deps._dagger_hilt_android_internal_modules_HiltWrapper_Ac
         _com_halo_blog_ui_viewmodel_SearchViewModel_HiltModules_KeyModule.class,
         _com_halo_blog_ui_viewmodel_TagViewModel_HiltModules_BindsModule.class,
         _com_halo_blog_ui_viewmodel_TagViewModel_HiltModules_KeyModule.class,
+        _com_halo_blog_utils_UpdateManager_HiltModules_BindsModule.class,
+        _com_halo_blog_utils_UpdateManager_HiltModules_KeyModule.class,
         _com_halo_blog_worker_AutoUpdateWorker_HiltModule.class,
         _dagger_hilt_android_flags_FragmentGetContextFix_FragmentGetContextFixEntryPoint.class,
         _dagger_hilt_android_flags_HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule.class,

@@ -20,6 +20,9 @@ class PreferenceManager(context: Context) {
         private const val KEY_CACHED_POST_CONTENT = "cached_post_content_"
         private const val KEY_POST_CONTENT_TIMESTAMP = "post_content_timestamp_"
         private const val KEY_AUTO_UPDATE_ENABLED = "auto_update_enabled"
+        private const val KEY_HAS_NEW_VERSION = "has_new_version"
+        private const val KEY_NEW_VERSION_NUMBER = "new_version_number"
+        private const val KEY_NEW_VERSION_DOWNLOAD_URL = "new_version_download_url"
         private const val CACHE_EXPIRY_TIME = 5 * 60 * 1000L // 5分钟缓存过期时间
     }
     
@@ -224,5 +227,59 @@ class PreferenceManager(context: Context) {
      */
     fun isAutoUpdateEnabled(): Boolean {
         return sharedPreferences.getBoolean(KEY_AUTO_UPDATE_ENABLED, false)
+    }
+    
+    /**
+     * 设置是否有新版本
+     */
+    fun setHasNewVersion(hasNewVersion: Boolean) {
+        sharedPreferences.edit()
+            .putBoolean(KEY_HAS_NEW_VERSION, hasNewVersion)
+            .apply()
+        LogUtils.d("PreferenceManager", "设置新版本状态: $hasNewVersion")
+    }
+    
+    /**
+     * 检查是否有新版本
+     */
+    fun hasNewVersion(): Boolean {
+        return sharedPreferences.getBoolean(KEY_HAS_NEW_VERSION, false)
+    }
+    
+    /**
+     * 保存新版本信息
+     */
+    fun setNewVersionInfo(version: String, downloadUrl: String) {
+        sharedPreferences.edit()
+            .putString(KEY_NEW_VERSION_NUMBER, version)
+            .putString(KEY_NEW_VERSION_DOWNLOAD_URL, downloadUrl)
+            .apply()
+        LogUtils.d("PreferenceManager", "保存新版本信息: $version")
+    }
+    
+    /**
+     * 获取新版本号
+     */
+    fun getNewVersionNumber(): String? {
+        return sharedPreferences.getString(KEY_NEW_VERSION_NUMBER, null)
+    }
+    
+    /**
+     * 获取新版本下载链接
+     */
+    fun getNewVersionDownloadUrl(): String? {
+        return sharedPreferences.getString(KEY_NEW_VERSION_DOWNLOAD_URL, null)
+    }
+    
+    /**
+     * 清除新版本信息
+     */
+    fun clearNewVersionInfo() {
+        sharedPreferences.edit()
+            .remove(KEY_HAS_NEW_VERSION)
+            .remove(KEY_NEW_VERSION_NUMBER)
+            .remove(KEY_NEW_VERSION_DOWNLOAD_URL)
+            .apply()
+        LogUtils.d("PreferenceManager", "清除新版本信息")
     }
 }

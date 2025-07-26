@@ -27,6 +27,14 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.input.VisualTransformation
 import com.halo.blog.utils.PreferenceManager
 import com.halo.blog.utils.AutoUpdateManager
+import com.halo.blog.utils.UpdateChecker
+import com.halo.blog.ui.components.UpdateDialog
+import androidx.compose.material.icons.filled.Refresh
+import androidx.hilt.navigation.compose.hiltViewModel
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.CoroutineScope
+import com.halo.blog.data.model.UpdateInfo
+import com.halo.blog.utils.UpdateManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -36,6 +44,7 @@ fun SettingsScreen(
 ) {
     val context = LocalContext.current
     val preferenceManager = remember { PreferenceManager(context) }
+    val coroutineScope = rememberCoroutineScope()
     
     // 服务器选项
     val serverOptions = listOf(
@@ -254,6 +263,21 @@ fun SettingsScreen(
             
             Spacer(modifier = Modifier.height(32.dp))
             
+            // 应用更新设置
+            Text(
+                text = "应用更新",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                modifier = Modifier.padding(bottom = 16.dp)
+            )
+            
+            AppUpdateSettings(
+                 preferenceManager = preferenceManager,
+                 coroutineScope = coroutineScope
+             )
+            
+            Spacer(modifier = Modifier.height(32.dp))
+            
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors = CardDefaults.cardColors(
@@ -277,6 +301,171 @@ fun SettingsScreen(
                 }
             }
         }
+    }
+}
+
+@Composable
+fun AppUpdateSettings(
+    preferenceManager: PreferenceManager,
+    coroutineScope: CoroutineScope
+) {
+    val updateManager: UpdateManager = hiltViewModel()
+    var isChecking by remember { mutableStateOf(false) }
+    var showUpdateDialog by remember { mutableStateOf(false) }
+    var updateInfo by remember { mutableStateOf<com.halo.blog.data.model.UpdateInfo?>(null) }
+    var checkResult by remember { mutableStateOf<String?>(null) }
+    
+    // 检查是否有保存的更新信息
+     LaunchedEffect(Unit) {
+         if (preferenceManager.hasNewVersion()) {
+             val versionNumber = preferenceManager.getNewVersionNumber()
+             val downloadUrl = preferenceManager.getNewVersionDownloadUrl()
+             if (versionNumber != null && downloadUrl != null) {
+                 updateInfo = UpdateInfo(
+                     version = versionNumber,
+                     versionName = versionNumber,
+                     description = null,
+                     downloadUrl = downloadUrl,
+                     fileSize = 0L,
+                     publishTime = ""
+                 )
+                 showUpdateDialog = true
+             }
+         }
+     }
+    
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        Text(
+            text = "检查应用是否有新版本可用",
+            fontSize = 14.sp,
+            color = MaterialTheme.colorScheme.secondary,
+            modifier = Modifier.padding(bottom = 16.dp)
+        )
+        
+        Button(
+            onClick = {
+                isChecking = true
+                checkResult = null
+                updateManager.checkForUpdate()
+                 coroutineScope.launch {
+                     updateManager.updateState.collect { state ->
+                         when (state) {
+                             is UpdateManager.UpdateState.Checking -> {
+                                 isChecking = true
+                                 checkResult = null
+                             }
+                             is UpdateManager.UpdateState.UpdateAvailable -> {
+                                 isChecking = false
+                                 updateInfo = state.updateInfo
+                                 preferenceManager.setHasNewVersion(true)
+                                 preferenceManager.setNewVersionInfo(state.updateInfo.version, state.updateInfo.downloadUrl)
+                                 showUpdateDialog = true
+                                 checkResult = "发现新版本 ${state.updateInfo.version}（当前版本：${com.halo.blog.BuildConfig.VERSION_NAME}）"
+                             }
+                             is UpdateManager.UpdateState.NoUpdate -> {
+                                 isChecking = false
+                                 checkResult = "当前已是最新版本:本地${com.halo.blog.BuildConfig.VERSION_NAME} 远程${state.remoteVersion ?: "未知"}"
+                             }
+                             is UpdateManager.UpdateState.Error -> {
+                                 isChecking = false
+                                 checkResult = "检查更新失败: ${state.message}"
+                             }
+                             else -> {
+                                 isChecking = false
+                             }
+                         }
+                     }
+                 }
+            },
+            enabled = !isChecking,
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            if (isChecking) {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    CircularProgressIndicator(
+                        modifier = Modifier.size(16.dp),
+                        strokeWidth = 2.dp
+                    )
+                    Text("检查中...")
+                }
+            } else {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Refresh,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
+                    )
+                    Text("检查更新")
+                }
+            }
+        }
+        
+        // 显示检查结果
+        checkResult?.let { result ->
+            Spacer(modifier = Modifier.height(12.dp))
+            Card(
+                modifier = Modifier.fillMaxWidth(),
+                colors = CardDefaults.cardColors(
+                    containerColor = if (result.contains("失败")) {
+                        MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.3f)
+                    } else if (result.contains("新版本")) {
+                        MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
+                    } else {
+                        MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
+                    }
+                )
+            ) {
+                Row(
+                    modifier = Modifier.padding(12.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Icon(
+                        imageVector = Icons.Default.Info,
+                        contentDescription = null,
+                        tint = if (result.contains("失败")) {
+                            MaterialTheme.colorScheme.error
+                        } else if (result.contains("新版本")) {
+                            MaterialTheme.colorScheme.primary
+                        } else {
+                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f)
+                        },
+                        modifier = Modifier.size(16.dp)
+                    )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text(
+                        text = result,
+                        fontSize = 12.sp,
+                        color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.8f)
+                    )
+                }
+            }
+        }
+    }
+    
+    // 显示更新对话框
+    if (showUpdateDialog && updateInfo != null) {
+        UpdateDialog(
+            updateInfo = updateInfo!!,
+            onDownload = {
+                // 这里可以添加下载逻辑
+                showUpdateDialog = false
+                preferenceManager.setHasNewVersion(false)
+                preferenceManager.clearNewVersionInfo()
+            },
+            onDismiss = {
+                showUpdateDialog = false
+                preferenceManager.setHasNewVersion(false)
+                preferenceManager.clearNewVersionInfo()
+            }
+        )
     }
 }
 

@@ -1,6 +1,6 @@
 package com.halo.blog.data.api;
 
-import android.content.Context;
+import com.halo.blog.utils.PreferenceManager;
 import dagger.internal.DaggerGenerated;
 import dagger.internal.Factory;
 import dagger.internal.Preconditions;
@@ -12,7 +12,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 
 @ScopeMetadata("javax.inject.Singleton")
-@QualifierMetadata("dagger.hilt.android.qualifiers.ApplicationContext")
+@QualifierMetadata
 @DaggerGenerated
 @Generated(
     value = "dagger.internal.codegen.ComponentProcessor",
@@ -25,25 +25,27 @@ import retrofit2.Retrofit;
 public final class NetworkModule_ProvideRetrofitFactory implements Factory<Retrofit> {
   private final Provider<OkHttpClient> okHttpClientProvider;
 
-  private final Provider<Context> contextProvider;
+  private final Provider<PreferenceManager> preferenceManagerProvider;
 
   public NetworkModule_ProvideRetrofitFactory(Provider<OkHttpClient> okHttpClientProvider,
-      Provider<Context> contextProvider) {
+      Provider<PreferenceManager> preferenceManagerProvider) {
     this.okHttpClientProvider = okHttpClientProvider;
-    this.contextProvider = contextProvider;
+    this.preferenceManagerProvider = preferenceManagerProvider;
   }
 
   @Override
   public Retrofit get() {
-    return provideRetrofit(okHttpClientProvider.get(), contextProvider.get());
+    return provideRetrofit(okHttpClientProvider.get(), preferenceManagerProvider.get());
   }
 
   public static NetworkModule_ProvideRetrofitFactory create(
-      Provider<OkHttpClient> okHttpClientProvider, Provider<Context> contextProvider) {
-    return new NetworkModule_ProvideRetrofitFactory(okHttpClientProvider, contextProvider);
+      Provider<OkHttpClient> okHttpClientProvider,
+      Provider<PreferenceManager> preferenceManagerProvider) {
+    return new NetworkModule_ProvideRetrofitFactory(okHttpClientProvider, preferenceManagerProvider);
   }
 
-  public static Retrofit provideRetrofit(OkHttpClient okHttpClient, Context context) {
-    return Preconditions.checkNotNullFromProvides(NetworkModule.INSTANCE.provideRetrofit(okHttpClient, context));
+  public static Retrofit provideRetrofit(OkHttpClient okHttpClient,
+      PreferenceManager preferenceManager) {
+    return Preconditions.checkNotNullFromProvides(NetworkModule.INSTANCE.provideRetrofit(okHttpClient, preferenceManager));
   }
 }

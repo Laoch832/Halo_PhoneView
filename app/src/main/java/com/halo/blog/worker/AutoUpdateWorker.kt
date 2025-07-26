@@ -7,6 +7,7 @@ import androidx.work.WorkerParameters
 import com.halo.blog.data.repository.HaloRepository
 import com.halo.blog.utils.LogUtils
 import com.halo.blog.utils.PreferenceManager
+import com.halo.blog.utils.UpdateChecker
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.Dispatchers
@@ -20,7 +21,8 @@ import kotlinx.coroutines.withContext
 class AutoUpdateWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted params: WorkerParameters,
-    private val repository: HaloRepository
+    private val repository: HaloRepository,
+    private val updateChecker: UpdateChecker
 ) : CoroutineWorker(context, params) {
 
     override suspend fun doWork(): Result = withContext(Dispatchers.IO) {
@@ -56,6 +58,23 @@ class AutoUpdateWorker @AssistedInject constructor(
             } catch (e: Exception) {
                 LogUtils.e("AutoUpdateWorker", "更新文章列表失败: ${e.message}")
                 // 不返回失败，继续尝试其他更新
+            }
+
+            // 检查应用更新
+            try {
+                LogUtils.d("AutoUpdateWorker", "检查应用更新")
+                val updateInfo = updateChecker.checkForUpdate()
+                if (updateInfo != null) {
+                    LogUtils.i("AutoUpdateWorker", "发现新版本: ${updateInfo.version}")
+                    // 这里可以发送通知或者保存更新信息供主界面使用
+                    preferenceManager.setHasNewVersion(true)
+                    preferenceManager.setNewVersionInfo(updateInfo.version, updateInfo.downloadUrl)
+                } else {
+                    LogUtils.d("AutoUpdateWorker", "当前已是最新版本")
+                    preferenceManager.setHasNewVersion(false)
+                }
+            } catch (e: Exception) {
+                LogUtils.e("AutoUpdateWorker", "检查应用更新失败: ${e.message}")
             }
 
             // 可以在这里添加更多的后台更新逻辑

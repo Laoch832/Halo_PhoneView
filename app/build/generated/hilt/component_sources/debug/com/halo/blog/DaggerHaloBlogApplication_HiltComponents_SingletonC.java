@@ -15,7 +15,12 @@ import com.halo.blog.data.api.NetworkModule_ProvideLoggingInterceptorFactory;
 import com.halo.blog.data.api.NetworkModule_ProvideOkHttpClientFactory;
 import com.halo.blog.data.api.NetworkModule_ProvidePreferenceManagerFactory;
 import com.halo.blog.data.api.NetworkModule_ProvideRetrofitFactory;
+import com.halo.blog.data.api.UpdateApiService;
 import com.halo.blog.data.repository.HaloRepository;
+import com.halo.blog.di.UpdateModule;
+import com.halo.blog.di.UpdateModule_ProvideUpdateApiServiceFactory;
+import com.halo.blog.di.UpdateModule_ProvideUpdateCheckerFactory;
+import com.halo.blog.di.UpdateModule_ProvideUpdateRetrofitFactory;
 import com.halo.blog.ui.viewmodel.CategoryTagViewModel;
 import com.halo.blog.ui.viewmodel.CategoryTagViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.halo.blog.ui.viewmodel.CommentViewModel;
@@ -27,6 +32,9 @@ import com.halo.blog.ui.viewmodel.SearchViewModel_HiltModules_KeyModule_ProvideF
 import com.halo.blog.ui.viewmodel.TagViewModel;
 import com.halo.blog.ui.viewmodel.TagViewModel_HiltModules_KeyModule_ProvideFactory;
 import com.halo.blog.utils.PreferenceManager;
+import com.halo.blog.utils.UpdateChecker;
+import com.halo.blog.utils.UpdateManager;
+import com.halo.blog.utils.UpdateManager_HiltModules_KeyModule_ProvideFactory;
 import dagger.hilt.android.ActivityRetainedLifecycle;
 import dagger.hilt.android.ViewModelLifecycle;
 import dagger.hilt.android.flags.HiltWrapper_FragmentGetContextFix_FragmentGetContextFixModule;
@@ -113,6 +121,15 @@ public final class DaggerHaloBlogApplication_HiltComponents_SingletonC {
     @Deprecated
     public Builder networkModule(NetworkModule networkModule) {
       Preconditions.checkNotNull(networkModule);
+      return this;
+    }
+
+    /**
+     * @deprecated This module is declared, but an instance is not used in the component. This method is a no-op. For more, see https://dagger.dev/unused-modules.
+     */
+    @Deprecated
+    public Builder updateModule(UpdateModule updateModule) {
+      Preconditions.checkNotNull(updateModule);
       return this;
     }
 
@@ -407,7 +424,7 @@ public final class DaggerHaloBlogApplication_HiltComponents_SingletonC {
 
     @Override
     public Set<String> getViewModelKeys() {
-      return SetBuilder.<String>newSetBuilder(5).add(CategoryTagViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(CommentViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(PostViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SearchViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(TagViewModel_HiltModules_KeyModule_ProvideFactory.provide()).build();
+      return SetBuilder.<String>newSetBuilder(6).add(CategoryTagViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(CommentViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(PostViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(SearchViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(TagViewModel_HiltModules_KeyModule_ProvideFactory.provide()).add(UpdateManager_HiltModules_KeyModule_ProvideFactory.provide()).build();
     }
 
     @Override
@@ -443,6 +460,8 @@ public final class DaggerHaloBlogApplication_HiltComponents_SingletonC {
 
     private Provider<TagViewModel> tagViewModelProvider;
 
+    private Provider<UpdateManager> updateManagerProvider;
+
     private ViewModelCImpl(SingletonCImpl singletonCImpl,
         ActivityRetainedCImpl activityRetainedCImpl, SavedStateHandle savedStateHandleParam,
         ViewModelLifecycle viewModelLifecycleParam) {
@@ -461,11 +480,12 @@ public final class DaggerHaloBlogApplication_HiltComponents_SingletonC {
       this.postViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 2);
       this.searchViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 3);
       this.tagViewModelProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 4);
+      this.updateManagerProvider = new SwitchingProvider<>(singletonCImpl, activityRetainedCImpl, viewModelCImpl, 5);
     }
 
     @Override
     public Map<String, Provider<ViewModel>> getHiltViewModelMap() {
-      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(5).put("com.halo.blog.ui.viewmodel.CategoryTagViewModel", ((Provider) categoryTagViewModelProvider)).put("com.halo.blog.ui.viewmodel.CommentViewModel", ((Provider) commentViewModelProvider)).put("com.halo.blog.ui.viewmodel.PostViewModel", ((Provider) postViewModelProvider)).put("com.halo.blog.ui.viewmodel.SearchViewModel", ((Provider) searchViewModelProvider)).put("com.halo.blog.ui.viewmodel.TagViewModel", ((Provider) tagViewModelProvider)).build();
+      return MapBuilder.<String, Provider<ViewModel>>newMapBuilder(6).put("com.halo.blog.ui.viewmodel.CategoryTagViewModel", ((Provider) categoryTagViewModelProvider)).put("com.halo.blog.ui.viewmodel.CommentViewModel", ((Provider) commentViewModelProvider)).put("com.halo.blog.ui.viewmodel.PostViewModel", ((Provider) postViewModelProvider)).put("com.halo.blog.ui.viewmodel.SearchViewModel", ((Provider) searchViewModelProvider)).put("com.halo.blog.ui.viewmodel.TagViewModel", ((Provider) tagViewModelProvider)).put("com.halo.blog.utils.UpdateManager", ((Provider) updateManagerProvider)).build();
     }
 
     private static final class SwitchingProvider<T> implements Provider<T> {
@@ -503,6 +523,9 @@ public final class DaggerHaloBlogApplication_HiltComponents_SingletonC {
 
           case 4: // com.halo.blog.ui.viewmodel.TagViewModel 
           return (T) new TagViewModel(singletonCImpl.haloRepositoryProvider.get());
+
+          case 5: // com.halo.blog.utils.UpdateManager 
+          return (T) new UpdateManager(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule), singletonCImpl.provideUpdateCheckerProvider.get());
 
           default: throw new AssertionError(id);
         }
@@ -589,13 +612,19 @@ public final class DaggerHaloBlogApplication_HiltComponents_SingletonC {
 
     private Provider<OkHttpClient> provideOkHttpClientProvider;
 
+    private Provider<PreferenceManager> providePreferenceManagerProvider;
+
     private Provider<Retrofit> provideRetrofitProvider;
 
     private Provider<HaloApiService> provideHaloApiServiceProvider;
 
     private Provider<HaloRepository> haloRepositoryProvider;
 
-    private Provider<PreferenceManager> providePreferenceManagerProvider;
+    private Provider<Retrofit> provideUpdateRetrofitProvider;
+
+    private Provider<UpdateApiService> provideUpdateApiServiceProvider;
+
+    private Provider<UpdateChecker> provideUpdateCheckerProvider;
 
     private SingletonCImpl(ApplicationContextModule applicationContextModuleParam) {
       this.applicationContextModule = applicationContextModuleParam;
@@ -608,14 +637,17 @@ public final class DaggerHaloBlogApplication_HiltComponents_SingletonC {
       this.provideAuthInterceptorProvider = DoubleCheck.provider(new SwitchingProvider<Interceptor>(singletonCImpl, 4));
       this.provideLoggingInterceptorProvider = DoubleCheck.provider(new SwitchingProvider<HttpLoggingInterceptor>(singletonCImpl, 5));
       this.provideOkHttpClientProvider = DoubleCheck.provider(new SwitchingProvider<OkHttpClient>(singletonCImpl, 3));
+      this.providePreferenceManagerProvider = DoubleCheck.provider(new SwitchingProvider<PreferenceManager>(singletonCImpl, 6));
       this.provideRetrofitProvider = DoubleCheck.provider(new SwitchingProvider<Retrofit>(singletonCImpl, 2));
       this.provideHaloApiServiceProvider = DoubleCheck.provider(new SwitchingProvider<HaloApiService>(singletonCImpl, 1));
       this.haloRepositoryProvider = DoubleCheck.provider(new SwitchingProvider<HaloRepository>(singletonCImpl, 0));
-      this.providePreferenceManagerProvider = DoubleCheck.provider(new SwitchingProvider<PreferenceManager>(singletonCImpl, 6));
+      this.provideUpdateRetrofitProvider = DoubleCheck.provider(new SwitchingProvider<Retrofit>(singletonCImpl, 9));
+      this.provideUpdateApiServiceProvider = DoubleCheck.provider(new SwitchingProvider<UpdateApiService>(singletonCImpl, 8));
+      this.provideUpdateCheckerProvider = DoubleCheck.provider(new SwitchingProvider<UpdateChecker>(singletonCImpl, 7));
     }
 
     @Override
-    public void injectHaloBlogApplication(HaloBlogApplication arg0) {
+    public void injectHaloBlogApplication(HaloBlogApplication haloBlogApplication) {
     }
 
     @Override
@@ -654,7 +686,7 @@ public final class DaggerHaloBlogApplication_HiltComponents_SingletonC {
           return (T) NetworkModule_ProvideHaloApiServiceFactory.provideHaloApiService(singletonCImpl.provideRetrofitProvider.get());
 
           case 2: // retrofit2.Retrofit 
-          return (T) NetworkModule_ProvideRetrofitFactory.provideRetrofit(singletonCImpl.provideOkHttpClientProvider.get(), ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
+          return (T) NetworkModule_ProvideRetrofitFactory.provideRetrofit(singletonCImpl.provideOkHttpClientProvider.get(), singletonCImpl.providePreferenceManagerProvider.get());
 
           case 3: // okhttp3.OkHttpClient 
           return (T) NetworkModule_ProvideOkHttpClientFactory.provideOkHttpClient(singletonCImpl.provideAuthInterceptorProvider.get(), singletonCImpl.provideLoggingInterceptorProvider.get());
@@ -667,6 +699,15 @@ public final class DaggerHaloBlogApplication_HiltComponents_SingletonC {
 
           case 6: // com.halo.blog.utils.PreferenceManager 
           return (T) NetworkModule_ProvidePreferenceManagerFactory.providePreferenceManager(ApplicationContextModule_ProvideContextFactory.provideContext(singletonCImpl.applicationContextModule));
+
+          case 7: // com.halo.blog.utils.UpdateChecker 
+          return (T) UpdateModule_ProvideUpdateCheckerFactory.provideUpdateChecker(singletonCImpl.provideUpdateApiServiceProvider.get());
+
+          case 8: // com.halo.blog.data.api.UpdateApiService 
+          return (T) UpdateModule_ProvideUpdateApiServiceFactory.provideUpdateApiService(singletonCImpl.provideUpdateRetrofitProvider.get());
+
+          case 9: // @com.halo.blog.di.UpdateRetrofit retrofit2.Retrofit 
+          return (T) UpdateModule_ProvideUpdateRetrofitFactory.provideUpdateRetrofit(singletonCImpl.provideOkHttpClientProvider.get());
 
           default: throw new AssertionError(id);
         }

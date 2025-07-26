@@ -102,9 +102,8 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(
         okHttpClient: OkHttpClient,
-        @ApplicationContext context: Context
+        preferenceManager: PreferenceManager
     ): Retrofit {
-        val preferenceManager = PreferenceManager(context)
         val baseUrl = preferenceManager.getSelectedServer() ?: "https://demo.halo.run/"
         val finalUrl = if (baseUrl.endsWith("/")) baseUrl else "$baseUrl/"
         
@@ -128,4 +127,6 @@ object NetworkModule {
     fun providePreferenceManager(@ApplicationContext context: Context): PreferenceManager {
         return PreferenceManager(context)
     }
+    
+
 }
