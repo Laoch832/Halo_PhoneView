@@ -1,4 +1,4 @@
-# Halo Blog Android App
+# Halo Blog Android View
 
 **注意**：本应用目前仅支持中文界面。
 **注意**：本应用目前仅支持中文界面。
