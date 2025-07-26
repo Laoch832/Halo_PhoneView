@@ -1,0 +1,19 @@
+<lint-module
+    format="1"
+    dir="G:\Halo-androidApp\app"
+    name=":app"
+    type="APP"
+    maven="Halo Blog:app:"
+    gradle="7.4.2"
+    buildFolder="build"
+    bootClassPath="D:\AndroidSDK\platforms\android-34\android.jar;D:\AndroidSDK\build-tools\30.0.3\core-lambda-stubs.jar"
+    javaSourceLevel="11"
+    compileTarget="android-34"
+    neverShrinking="true">
+  <lintOptions
+      abortOnError="true"
+      absolutePaths="true"
+      checkReleaseBuilds="true"
+      explainIssues="true"/>
+  <variant name="debug"/>
+</lint-module>

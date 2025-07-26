@@ -1,0 +1,193 @@
+{
+    "metadata": {
+        "finalizers": [
+            "post-protection"
+        ],
+        "name": "75816621-6556-4062-8ead-799934f8c492",
+        "labels": {
+            "content.halo.run/published": "true",
+            "content.halo.run/deleted": "false",
+            "content.halo.run/owner": "catboot",
+            "content.halo.run/visible": "PUBLIC",
+            "content.halo.run/archive-year": "2025",
+            "content.halo.run/archive-month": "07",
+            "content.halo.run/archive-day": "11"
+        },
+        "annotations": {
+            "content.halo.run/preferred-editor": "default",
+            "checksum/config": "cbed74d9b4e9bd303a6acde2005826ac51d29747a1f1c9e2d52b9b6deb25e50c",
+            "content.halo.run/permalink-pattern": "/archives/{slug}",
+            "content.halo.run/last-associated-categories": "[\"category-up5r2iqw\"]",
+            "content.halo.run/last-associated-tags": "[\"tag-b3dwc4fx\"]",
+            "content.halo.run/last-released-snapshot": "0dcd83ab-93cd-415a-8684-a427175fb8ba",
+            "checksum/content": "65a38566e2a125899b1d84c1467d876bb5312d74a41f18b95d4521137d630abb",
+            "content.halo.run/stats": "{\"visit\":12,\"upvote\":0,\"totalComment\":0,\"approvedComment\":0}"
+        },
+        "version": 42,
+        "creationTimestamp": "2025-07-10T20:27:31.100923602Z"
+    },
+    "spec": {
+        "title": "由豆包AI生成的博客[Doge]",
+        "slug": "you-dou-bao-aisheng-cheng-de-bo-ke-doge",
+        "releaseSnapshot": "0dcd83ab-93cd-415a-8684-a427175fb8ba",
+        "headSnapshot": "0dcd83ab-93cd-415a-8684-a427175fb8ba",
+        "baseSnapshot": "0dcd83ab-93cd-415a-8684-a427175fb8ba",
+        "owner": "catboot",
+        "template": "",
+        "cover": "",
+        "deleted": false,
+        "publish": true,
+        "publishTime": "2025-07-10T20:29:12.253551914Z",
+        "pinned": false,
+        "allowComment": true,
+        "visible": "PUBLIC",
+        "priority": 0,
+        "excerpt": {
+            "autoGenerate": true,
+            "raw": ""
+        },
+        "categories": [
+            "category-up5r2iqw"
+        ],
+        "tags": [
+            "tag-b3dwc4fx"
+        ],
+        "htmlMetas": []
+    },
+    "status": {
+        "phase": "PUBLISHED",
+        "conditions": [
+            {
+                "type": "PUBLISHED",
+                "status": "TRUE",
+                "lastTransitionTime": "2025-07-10T20:29:12.253487043Z",
+                "message": "Post published successfully.",
+                "reason": "Published"
+            },
+            {
+                "type": "DRAFT",
+                "status": "TRUE",
+                "lastTransitionTime": "2025-07-10T20:27:31.788042417Z",
+                "message": "Drafted post successfully.",
+                "reason": "DraftedSuccessfully"
+            }
+        ],
+        "permalink": "/archives/you-dou-bao-aisheng-cheng-de-bo-ke-doge",
+        "excerpt": "",
+        "inProgress": false,
+        "contributors": [
+            "catboot"
+        ],
+        "hideFromList": false,
+        "lastModifyTime": "2025-07-10T20:29:10.459743348Z",
+        "observedVersion": 42
+    },
+    "categories": [
+        {
+            "metadata": {
+                "generateName": "category-",
+                "finalizers": [
+                    "category-protection"
+                ],
+                "name": "category-up5r2iqw",
+                "annotations": {
+                    "content.halo.run/permalink-pattern": "categories",
+                    "content.halo.run/last-hidden-state": "false"
+                },
+                "version": 3,
+                "creationTimestamp": "2025-07-10T20:28:47.421924883Z"
+            },
+            "spec": {
+                "displayName": "豆包AI播客",
+                "slug": "dou-bao-aibo-ke",
+                "description": "",
+                "cover": "",
+                "template": "",
+                "priority": 3,
+                "children": [],
+                "preventParentPostCascadeQuery": false,
+                "hideFromList": false
+            },
+            "status": {
+                "permalink": "/categories/dou-bao-aibo-ke",
+                "postCount": 1,
+                "visiblePostCount": 1
+            },
+            "postCount": 1
+        }
+    ],
+    "tags": [
+        {
+            "metadata": {
+                "generateName": "tag-",
+                "finalizers": [
+                    "tag-protection"
+                ],
+                "name": "tag-b3dwc4fx",
+                "annotations": {
+                    "content.halo.run/permalink-pattern": "tags"
+                },
+                "version": 7,
+                "creationTimestamp": "2025-07-10T20:28:56.598688421Z"
+            },
+            "spec": {
+                "displayName": "搞笑",
+                "slug": "gao-xiao",
+                "color": "#ffffff",
+                "cover": ""
+            },
+            "status": {
+                "permalink": "/tags/gao-xiao",
+                "visiblePostCount": 1,
+                "postCount": 1,
+                "observedVersion": 7
+            },
+            "postCount": 1
+        }
+    ],
+    "contributors": [
+        {
+            "name": "catboot",
+            "displayName": "catboot",
+            "permalink": "/authors/catboot",
+            "metadata": {
+                "finalizers": [
+                    "user-protection"
+                ],
+                "name": "catboot",
+                "annotations": {
+                    "rbac.authorization.halo.run/role-names": "[\"super-role\"]",
+                    "halo.run/email-to-verify": "sayhi@120505.xyz"
+                },
+                "version": 5,
+                "creationTimestamp": "2025-07-10T07:15:18.135355370Z"
+            }
+        }
+    ],
+    "owner": {
+        "name": "catboot",
+        "displayName": "catboot",
+        "permalink": "/authors/catboot",
+        "metadata": {
+            "finalizers": [
+                "user-protection"
+            ],
+            "name": "catboot",
+            "annotations": {
+                "rbac.authorization.halo.run/role-names": "[\"super-role\"]",
+                "halo.run/email-to-verify": "sayhi@120505.xyz"
+            },
+            "version": 5,
+            "creationTimestamp": "2025-07-10T07:15:18.135355370Z"
+        }
+    },
+    "stats": {
+        "visit": 12,
+        "upvote": 0,
+        "comment": 0
+    },
+    "content": {
+        "raw": "<p style=\"\"><audio src=\"/upload/%E7%94%9F%E6%B4%BB%E4%B9%8B%E9%81%87%E6%9B%B4%E6%96%B0%E7%BE%8E%E9%A3%9F%E6%97%A5%E8%AE%B0.wav\" controls=\"true\"></audio></p>",
+        "content": "<p style=\"\"><audio src=\"/upload/%E7%94%9F%E6%B4%BB%E4%B9%8B%E9%81%87%E6%9B%B4%E6%96%B0%E7%BE%8E%E9%A3%9F%E6%97%A5%E8%AE%B0.wav\" controls=\"true\"></audio></p>"
+    }
+}

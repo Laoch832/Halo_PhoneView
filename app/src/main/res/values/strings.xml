@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">Halo Blog</string>
+    <string name="home">首页</string>
+    <string name="search">搜索</string>
+    <string name="categories">分类</string>
+    <string name="tags">标签</string>
+    <string name="settings">设置</string>
+    <string name="loading">加载中...</string>
+    <string name="error_network">网络错误，请检查网络连接</string>
+    <string name="error_unknown">未知错误</string>
+    <string name="retry">重试</string>
+    <string name="no_posts">暂无文章</string>
+    <string name="no_search_results">没有找到相关文章</string>
+    <string name="search_hint">搜索文章...</string>
+    <string name="post_detail">文章详情</string>
+    <string name="comments_count">%d 条评论</string>
+    <string name="pinned">置顶</string>
+    <string name="category_prefix">分类: %s</string>
+    <string name="tag_prefix">标签: %s</string>
+    <string name="published_at">发布于 %s</string>
+    <string name="back">返回</string>
+    <string name="clear">清除</string>
+</resources>

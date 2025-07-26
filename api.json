@@ -1,0 +1,119 @@
+{
+    "page": 1,
+    "size": 0,
+    "total": 4,
+    "items": [
+        {
+            "metadata": {
+                "generateName": "tag-",
+                "finalizers": [
+                    "tag-protection"
+                ],
+                "name": "tag-eorkyaix",
+                "annotations": {
+                    "content.halo.run/permalink-pattern": "tags"
+                },
+                "version": 12,
+                "creationTimestamp": "2025-07-10T20:42:26.406027924Z"
+            },
+            "spec": {
+                "displayName": "分享",
+                "slug": "fen-xiang",
+                "color": "#ffffff",
+                "cover": ""
+            },
+            "status": {
+                "permalink": "/tags/fen-xiang",
+                "visiblePostCount": 1,
+                "postCount": 2,
+                "observedVersion": 12
+            },
+            "postCount": 1
+        },
+        {
+            "metadata": {
+                "generateName": "tag-",
+                "finalizers": [
+                    "tag-protection"
+                ],
+                "name": "tag-b3dwc4fx",
+                "annotations": {
+                    "content.halo.run/permalink-pattern": "tags"
+                },
+                "version": 7,
+                "creationTimestamp": "2025-07-10T20:28:56.598688421Z"
+            },
+            "spec": {
+                "displayName": "搞笑",
+                "slug": "gao-xiao",
+                "color": "#ffffff",
+                "cover": ""
+            },
+            "status": {
+                "permalink": "/tags/gao-xiao",
+                "visiblePostCount": 1,
+                "postCount": 1,
+                "observedVersion": 7
+            },
+            "postCount": 1
+        },
+        {
+            "metadata": {
+                "generateName": "tag-",
+                "finalizers": [
+                    "tag-protection"
+                ],
+                "name": "tag-hqiys4ps",
+                "annotations": {
+                    "content.halo.run/permalink-pattern": "tags"
+                },
+                "version": 10,
+                "creationTimestamp": "2025-07-10T08:12:20.502114795Z"
+            },
+            "spec": {
+                "displayName": "life",
+                "slug": "life",
+                "color": "#ffffff",
+                "cover": ""
+            },
+            "status": {
+                "permalink": "/tags/life",
+                "visiblePostCount": 2,
+                "postCount": 2,
+                "observedVersion": 10
+            },
+            "postCount": 2
+        },
+        {
+            "metadata": {
+                "finalizers": [
+                    "tag-protection"
+                ],
+                "name": "c33ceabb-d8f1-4711-8991-bb8f5c92ad7c",
+                "annotations": {
+                    "content.halo.run/permalink-pattern": "tags"
+                },
+                "version": 12,
+                "creationTimestamp": "2025-07-10T07:15:16.265463719Z"
+            },
+            "spec": {
+                "displayName": "Halo",
+                "slug": "halo",
+                "color": "#ffffff",
+                "cover": ""
+            },
+            "status": {
+                "permalink": "/tags/halo",
+                "visiblePostCount": 0,
+                "postCount": 1,
+                "observedVersion": 12
+            },
+            "postCount": 0
+        }
+    ],
+    "first": true,
+    "last": true,
+    "hasNext": false,
+    "hasPrevious": false,
+    "totalPages": 1
+}
